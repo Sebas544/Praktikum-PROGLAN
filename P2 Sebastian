@@ -1,0 +1,88 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <iostream>
+
+using namespace std;
+
+class Car {
+    
+    public:
+    float kecepatan;
+    float bensin;
+    float bensin_max;
+    int jumlah_penumpang;
+    
+    Car(){
+        kecepatan = 10;
+        bensin = 100;
+        bensin_max = 100;
+        jumlah_penumpang = 4;
+    }
+    
+    virtual void jalan(){
+        bensin -= kecepatan;
+        cout<<"Mobil ini berjalan sejauh "<< kecepatan << "km/jam"<< endl;
+    }
+};
+
+class SuperCar : public Car {
+    public:
+    SuperCar(){
+        kecepatan = 100;
+        bensin = 1000;
+        bensin_max = 1000;
+    }
+    
+    
+};
+
+class Pickup : public Car {
+    private:
+    float kapasitas = 1.0f;
+    float kapasitas_max = 100.0f;
+    
+    public:
+    Pickup(){
+       kecepatan = 80.0f;
+       bensin = 100.0f;
+       bensin_max = 100.0f;
+       jumlah_penumpang = 2;
+    }
+    
+    void angkut(int berat_barang){
+        kapasitas += berat_barang;
+        if (kapasitas > kapasitas_max){
+            cout << "Muatan melebihi kapasitas" << endl;
+        } else {
+            cout << "Muatan berbobot "<< kapasitas << endl;
+        }
+    }
+    
+    void jalan() override {
+        kecepatan = kecepatan/kapasitas;
+        bensin -= kecepatan*(kapasitas/5.0f);
+        cout << "Mobil ini berjalan sejauh "<< kecepatan<<"km/jam dengan kapasitas terpakai "<< kapasitas << "kg"<< endl;
+        cout << bensin << endl;
+    }
+    
+};
+
+int main()
+{
+    Car mobil;
+    mobil.jalan();
+    SuperCar McLaren;
+    McLaren.jalan();
+    Pickup obj;
+    obj.angkut(10);
+    obj.jalan();
+    
+
+    return 0;
+}
